@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class PotionView : MonoBehaviour, IInteractable
 {
+    [SerializeField] SoundType soundType;
     private int potionEffect = 20;
+
     public void Interact()
     {
+        EventService.Instance.OnPotionDrinkEvent.InvokeEvent(potionEffect);
         GameService.Instance.GetInstructionView().HideInstruction();
-        GameService.Instance.GetSoundView().PlaySoundEffects(SoundType.DrinkPotion);
-        EventService.Instance.PotionDrinkEvent.InvokeEvent(potionEffect);
+        GameService.Instance.GetSoundView().PlaySoundEffects(soundType);
         gameObject.SetActive(false);
     }
 }
