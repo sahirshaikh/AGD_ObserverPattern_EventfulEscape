@@ -2,16 +2,17 @@ using UnityEngine;
 
 public class LightsOffByGhostEvent : MonoBehaviour
 {
-    [SerializeField] private int keysRequiredToTrigger;
-    [SerializeField] private SoundType soundToPlay;
+    [SerializeField] private int keyRequired;
+    [SerializeField] private SoundType soundType;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PlayerView>() != null && GameService.Instance.GetPlayerController().KeysEquipped == keysRequiredToTrigger)
+        if(other.GetComponent<PlayerView>()!=null && keyRequired == GameService.Instance.GetPlayerController().KeysEquipped)
         {
-            EventService.Instance.LightsOffByGhostEvent.InvokeEvent();
-            GameService.Instance.GetSoundView().PlaySoundEffects(soundToPlay);
-            GetComponent<Collider>().enabled = false;
+            EventService.Instance.OnLightsOffByGhostEvent.InvokeEvent();
+            GameService.Instance.GetSoundView().PlaySoundEffects(soundType);
+            this.enabled = false;
         }
     }
+
 }
