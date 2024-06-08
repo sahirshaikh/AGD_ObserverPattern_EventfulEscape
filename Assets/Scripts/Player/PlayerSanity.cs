@@ -1,3 +1,4 @@
+using UnityEditor.MPE;
 using UnityEngine;
 
 public class PlayerSanity : MonoBehaviour
@@ -12,6 +13,19 @@ public class PlayerSanity : MonoBehaviour
     {
         maxSanity = sanityLevel;
         playerController = GameService.Instance.GetPlayerController();
+    }
+
+    public void OnEnable()
+    {
+        EventService.Instance.OnRatRushEvent.AddListener(OnSupernaturalEvent);
+        EventService.Instance.OnSkullDrop.AddListener(OnSupernaturalEvent);
+
+    }
+    public void OnDisable()
+    {
+        EventService.Instance.OnRatRushEvent.RemoveListener(OnSupernaturalEvent);
+        EventService.Instance.OnSkullDrop.AddListener(OnSupernaturalEvent);
+
     }
     void Update()
     {
